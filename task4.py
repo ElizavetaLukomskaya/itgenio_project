@@ -48,9 +48,14 @@ def create_autopark():
         for i in range(len(buses)):
             file.write(str(buses[i].info()))
 
-def read_file():
-    buses = []
-    with open("buses.txt") as file:
+def read_file(filename):
+    try:
+        file = open(filename, "r")
+    except FileNotFoundError:
+        print("File Not Found Error: No such file or directory")
+        exit()
+    else:
+        buses = []
         lines = file.readlines()
         words = []
         i = 4
@@ -86,8 +91,8 @@ def search_by_point(city:str, buses):
         if bus.get_start() == city or bus.get_end() == city:
             print(bus.info())
 
-# create_autopark()
-autopark = read_file()
+create_autopark()
+autopark = read_file('buses.txt')
 show_autopark(autopark)
 sort_by_number(autopark)
 search_by_point('Pinsk', autopark)
